@@ -8,7 +8,7 @@ from kubernetes import client, config
 def get_temp_credentials():
     sts_client = boto3.client('sts')
     assumed_role_object = sts_client.assume_role(
-        RoleArn='my-role-arn',
+        RoleArn='arn:aws:iam::740665670670:role/heliumops-globalsearch-role-oidc',
         RoleSessionName='AssumedRoleSession'
     )
     credentials = assumed_role_object['Credentials']
@@ -19,7 +19,7 @@ def authenticate_to_opensearch():
     region = 'us-west-2'
     service = 'es'
     aws_auth = AWS4Auth(access_key, secret_key, region, service, session_token=session_token)
-    opensearch_host = 'my-opensearch-host'
+    opensearch_host = 'https://vpc-heliumops-globalsearch-6m6htouaujvnopm7gtwnpk6l4a.us-west-2.es.amazonaws.com'
     es = Elasticsearch(
         hosts=opensearch_host,
         http_auth=aws_auth,
